@@ -1,75 +1,84 @@
-# React + TypeScript + Vite
+# Noor-e-Verse
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A peaceful Islamic learning and daily practice web app for exploring duas, building habits, and nurturing spiritual growth.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Noor-e-Verse is a frontend web application designed to make everyday Islamic learning feel simple, calm, and accessible. It brings learning, daily duas, and personal practice together in a welcoming digital space.
 
-## React Compiler
+The project focuses on a clean user interface, thoughtful interactions, and a warm visual identity.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+* **Daily Learning:** Explore lessons organized around everyday routines.
+* **Dua Collection:** Read selected duas with transliteration and meanings.
+* **Learning Progress:** Mark lessons as completed.
+* **Search:** Find learning content easily.
+* **Daily Practice:** Explore sections designed for reflection and habit-building.
+* **Responsive Design:** A layout designed for desktop and mobile screens.
+* **Calm UI:** Warm ivory backgrounds, sage green accents, and botanical-inspired details.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* React
+* TypeScript
+* Vite
+* CSS
+* ESLint
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Prerequisites
 
-```
+Install [Node.js](https://nodejs.org/) and npm before starting.
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### Installation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Clone the repository:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   ```bash
+   git clone https://github.com/jsumaiyarpa/noor-e-verse.git
+   ```
 
-```
+2. Navigate to the project folder:
+
+   ```bash
+   cd noor-e-verse
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open the local URL shown in your terminal, usually `http://localhost:5173/`.
+
+## Project Status
+
+**In development**
+
+The current focus is designing and refining the frontend experience. Backend integration, authentication, and persistent user data may be introduced in future iterations.
+
+## Future Improvements
+
+* Persistent learning progress
+* User authentication and personal profiles
+* Saved duas and personalized collections
+* Daily reminders and practice tracking
+* Backend and database integration
+* Accessibility and usability improvements
+
+## Disclaimer
+
+Noor-e-Verse is an educational project under development. Religious content should be verified against trusted sources before being relied on for religious guidance.
+
+## License
+
+No license has been added yet. All rights are reserved by default unless a license is added to this repository.
