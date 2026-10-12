@@ -2,6 +2,14 @@
 import { useState } from 'react'
 import './App.css'
 
+import morningEveningImg from './assets/cards/morning-evening.webp'
+import everydayMomentsImg from './assets/cards/everyday-moments.webp'
+import peacefulSleepImg from './assets/cards/peaceful-sleep.webp'
+import shortSurahsImg from './assets/cards/short-surahs.webp'
+import quickDuasImg from './assets/cards/quick-duas.webp'
+import memoryMirrorImg from './assets/cards/memory-mirror.webp'
+import learningJourneyImg from './assets/cards/learning-journey.webp'
+
 
 const translations = {
   en: {
@@ -99,10 +107,24 @@ const translations = {
     profileTitle: 'Your journey,',
     profileTitleEm: 'your pace.',
     profileDescription:
-      'Your learning progress is stored in this page session for now. Account sync can be added later.',
+      'Your learning progress is saved on this device. Explore lessons, practise recall, and grow your garden.',
     backHomeButton: 'Back to home',
-    footerMessage: 'Made with care for a more mindful everyday.',
-    footerTagline: 'Learn gently · Grow sincerely',
+    backToLessons: 'Back to all lessons',
+    markCompleted: 'Mark lesson completed',
+    completedBadge: 'Completed ✓',
+    lessonDuasTitle: 'Duas in this lesson',
+    lessonHintActive: 'Select any lesson card to explore its duas and reflections.',
+    clearSearch: 'Clear search',
+    nextPractice: 'Next practice',
+    prevPractice: 'Previous practice',
+    practiceInMirror: 'Practise in Memory Mirror',
+    journeySummary: 'Your Learning Progress',
+    resetProgress: 'Reset progress',
+    lessonsCompletedCount: 'lessons completed',
+    singularGrowth: 'day of growth',
+    practiceItem: 'Practice item',
+    review: 'Review',
+    start: 'Start',
   },
 
   bn: {
@@ -200,14 +222,47 @@ const translations = {
     profileTitle: 'আপনার যাত্রা,',
     profileTitleEm: 'আপনার গতি।',
     profileDescription:
-      'আপাতত আপনার শেখার অগ্রগতি এই পেজের সেশনেই সংরক্ষিত থাকে। পরে অ্যাকাউন্টের সঙ্গে সিঙ্ক করার ব্যবস্থা যোগ করা যাবে।',
+      'আপনার শেখার অগ্রগতি আপনার ব্রাউজারে সংরক্ষিত থাকে। পাঠগুলো ঘুরে দেখুন, অনুশীলন করুন এবং আপনার বাগানকে বড় করে তুলুন।',
     backHomeButton: 'হোমে ফিরে যান',
-    footerMessage: 'প্রতিদিনকে আরও সচেতন করে তুলতে যত্নসহকারে তৈরি।',
-    footerTagline: 'ধীরে শিখুন · আন্তরিকভাবে এগিয়ে চলুন',
+    backToLessons: 'সব পাঠে ফিরে যান',
+    markCompleted: 'পাঠ সম্পন্ন হিসেবে চিহ্নিত করুন',
+    completedBadge: 'সম্পন্ন হয়েছে ✓',
+    lessonDuasTitle: 'এই পাঠের দোয়াগুলো',
+    lessonHintActive: 'দোয়া ও ভাবার্থ পড়তে যেকোনো পাঠ নির্বাচন করুন।',
+    clearSearch: 'অনুসন্ধান মুছুন',
+    nextPractice: 'পরবর্তী অনুশীলন',
+    prevPractice: 'পূর্ববর্তী অনুশীলন',
+    practiceInMirror: 'স্মৃতির আয়নায় অনুশীলন করুন',
+    journeySummary: 'আপনার শেখার অগ্রগতি',
+    resetProgress: 'অগ্রগতি রিসেট করুন',
+    lessonsCompletedCount: 'টি পাঠ সম্পন্ন',
+    singularGrowth: 'দিনের অগ্রগতি',
+    practiceItem: 'অনুশীলন',
+    review: 'পুনর্বিবেচনা',
+    start: 'শুরু করুন',
   },
 } as const
 
-const lessons = [
+interface LessonDua {
+  title: string
+  titleBn: string
+  text: string
+  meaning: string
+  bn: string
+}
+
+interface Lesson {
+  number: string
+  title: string
+  bn: string
+  icon: string
+  count: string
+  color: string
+  image: string
+  duas: LessonDua[]
+}
+
+const lessons: Lesson[] = [
   {
     number: '01',
     title: 'Morning & Evening',
@@ -215,6 +270,25 @@ const lessons = [
     icon: '☀️',
     count: '8 lessons',
     color: 'peach',
+    image: morningEveningImg,
+    duas: [
+      {
+        title: 'Waking up with gratitude',
+        titleBn: 'ঘুম থেকে ওঠার দোয়া',
+        text: "Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur",
+        meaning:
+          'All praise is for Allah who gave us life after having taken it from us, and unto Him is the resurrection.',
+        bn: 'সমস্ত প্রশংসা আল্লাহর, যিনি আমাদের মৃত্যুর পর জীবন দান করেছেন এবং তাঁর কাছেই প্রত্যাবর্তন।',
+      },
+      {
+        title: 'Morning protection',
+        titleBn: 'সকালের সুরক্ষার দোয়া',
+        text: "Bismillahil-ladhi la yadurru ma'as-mihi shay'un fil-ardi wa la fis-sama'i wa Huwas-Sami'ul-'Alim",
+        meaning:
+          'In the Name of Allah with Whose Name nothing can cause harm in the earth nor in the heavens, and He is the All-Hearing, the All-Knowing.',
+        bn: 'আল্লাহর নামে, যাঁর নামের সাথে আসমান ও জমিনের কোনো কিছুই ক্ষতি করতে পারে না, এবং তিনি সর্বশ্রোতা, সর্বজ্ঞানী।',
+      },
+    ],
   },
   {
     number: '02',
@@ -223,6 +297,24 @@ const lessons = [
     icon: '🌿',
     count: '12 lessons',
     color: 'sage',
+    image: everydayMomentsImg,
+    duas: [
+      {
+        title: 'Before eating',
+        titleBn: 'খাবারের শুরুতে দোয়া',
+        text: "Bismillahi wa 'ala barakatillah",
+        meaning: 'In the name of Allah and with the blessings of Allah.',
+        bn: 'আল্লাহর নামে এবং আল্লাহর বরকতের উপর শুরু করছি।',
+      },
+      {
+        title: 'After eating',
+        titleBn: 'খাবার শেষের দোয়া',
+        text: "Alhamdulillahil-ladhi at'amana wa saqana wa ja'alana minal-muslimin",
+        meaning:
+          'Praise be to Allah who has fed us and given us drink and made us Muslims.',
+        bn: 'সমস্ত প্রশংসা আল্লাহর, যিনি আমাদের আহার করিয়েছেন, পান করিয়েছেন এবং মুসলিম বানিয়েছেন।',
+      },
+    ],
   },
   {
     number: '03',
@@ -231,6 +323,24 @@ const lessons = [
     icon: '🌙',
     count: '6 lessons',
     color: 'lavender',
+    image: peacefulSleepImg,
+    duas: [
+      {
+        title: 'Before going to sleep',
+        titleBn: 'ঘুমানোর সময় দোয়া',
+        text: 'Bismika Allahumma amutu wa ahya',
+        meaning: 'In Your Name, O Allah, I die and I live.',
+        bn: 'হে আল্লাহ, আপনারই নামে আমি মারা যাই এবং জীবিত হই।',
+      },
+      {
+        title: 'Resting in peace',
+        titleBn: 'শান্তিময় ঘুমের স্মরণিকা',
+        text: "Allahumma qini 'adhabaka yawma tab'athu 'ibadak",
+        meaning:
+          'O Allah, protect me from Your punishment on the day You resurrect Your servants.',
+        bn: 'হে আল্লাহ, আমাকে আপনার শাস্তি থেকে রক্ষা করুন যেদিন আপনি আপনার বান্দাদের পুনরুত্থিত করবেন।',
+      },
+    ],
   },
   {
     number: '04',
@@ -239,6 +349,25 @@ const lessons = [
     icon: '📖',
     count: '12 lessons',
     color: 'butter',
+    image: shortSurahsImg,
+    duas: [
+      {
+        title: 'Surah Al-Ikhlas (Purity of Faith)',
+        titleBn: 'সূরা আল-ইখলাস',
+        text: 'Qul huwa Allahu ahad. Allahus-samad. Lam yalid wa lam yulad. Wa lam yakun lahu kufuwan ahad.',
+        meaning:
+          'Say: He is Allah, the One. Allah the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent.',
+        bn: 'বলুন, তিনিই আল্লাহ, একক। আল্লাহ অমুখাপেক্ষী। তিনি কাউকে জন্ম দেননি এবং কারো থেকে জন্ম নেননি। এবং তাঁর সমকক্ষ কেউ নেই।',
+      },
+      {
+        title: 'Surah Al-Kawthar (Abundance)',
+        titleBn: 'সূরা আল-কাউসার',
+        text: 'Inna a’taynakal-kawthar. Fa salli li rabbika wanhar. Inna shani’aka huwal-abtar.',
+        meaning:
+          'Indeed, We have granted you abundance. So pray to your Lord and sacrifice. Indeed, your enemy is the one cut off.',
+        bn: 'নিশ্চয়ই আমরা আপনাকে কাওসার দান করেছি। অতএব আপনার রবের উদ্দেশ্যে নামাজ পড়ুন এবং কুরবানি করুন।',
+      },
+    ],
   },
 ]
 
@@ -249,6 +378,7 @@ const quickDuas = [
     text: 'Rabbi zidni ilma',
     meaning: 'My Lord, increase me in knowledge.',
     bn: 'হে আমার রব, আমার জ্ঞান বৃদ্ধি করুন।',
+    image: quickDuasImg,
   },
   {
     title: 'For our parents',
@@ -257,16 +387,98 @@ const quickDuas = [
     meaning:
       'My Lord, have mercy on them as they raised me when I was small.',
     bn: 'হে আমার রব, তাঁদের প্রতি দয়া করুন, যেমন তাঁরা শৈশবে আমাকে লালন-পালন করেছেন।',
+    image: quickDuasImg,
   },
 ]
 
+const memoryPracticeItems = [
+  {
+    title: 'Seeking knowledge',
+    titleBn: 'জ্ঞান অর্জনের দোয়া',
+    text: 'Rabbi zidni ilma',
+    meaning: 'My Lord, increase me in knowledge.',
+    bn: 'হে আমার রব, আমার জ্ঞান বৃদ্ধি করুন।',
+    hint: 'Can you recall the words for seeking knowledge?',
+    hintBn: 'জ্ঞান অর্জনের দোয়াটি কি মনে করতে পারছেন?',
+    category: 'Daily Remembrance',
+    categoryBn: 'প্রতিদিনের স্মরণিকা',
+  },
+  {
+    title: 'For our parents',
+    titleBn: 'মা-বাবার জন্য দোয়া',
+    text: 'Rabbir hamhuma kama rabbayani saghira',
+    meaning:
+      'My Lord, have mercy on them as they raised me when I was small.',
+    bn: 'হে আমার রব, তাঁদের প্রতি দয়া করুন, যেমন তাঁরা শৈশবে আমাকে লালন-পালন করেছেন।',
+    hint: 'What words do we pray for our loving parents?',
+    hintBn: 'মা-বাবার জন্য আমরা কোন দোয়াটি করি?',
+    category: 'Kindness & Family',
+    categoryBn: 'সদয় আচরণ ও পরিবার',
+  },
+  {
+    title: 'Waking up with gratitude',
+    titleBn: 'ঘুম থেকে ওঠার দোয়া',
+    text: "Alhamdu lillahil-ladhi ahyana ba'da ma amatana wa ilayhin-nushur",
+    meaning:
+      'All praise is for Allah who gave us life after having taken it from us, and unto Him is the resurrection.',
+    bn: 'সমস্ত প্রশংসা আল্লাহর, যিনি আমাদের মৃত্যুর পর জীবন দান করেছেন এবং তাঁর কাছেই প্রত্যাবর্তন।',
+    hint: 'How do we begin the morning with praise?',
+    hintBn: 'সকালে ঘুম থেকে উঠে কীভাবে শোকরিয়া জানাই?',
+    category: 'Morning & Evening',
+    categoryBn: 'সকাল ও সন্ধ্যা',
+  },
+  {
+    title: 'Before eating',
+    titleBn: 'খাবারের শুরুতে দোয়া',
+    text: "Bismillahi wa 'ala barakatillah",
+    meaning: 'In the name of Allah and with the blessings of Allah.',
+    bn: 'আল্লাহর নামে এবং আল্লাহর বরকতের উপর শুরু করছি।',
+    hint: 'What words bring blessings before eating?',
+    hintBn: 'খাবার শুরুর আগে কোন বরকতময় বাক্য বলি?',
+    category: 'Everyday Moments',
+    categoryBn: 'প্রতিদিনের মুহূর্ত',
+  },
+  {
+    title: 'Before sleeping',
+    titleBn: 'ঘুমানোর সময় দোয়া',
+    text: 'Bismika Allahumma amutu wa ahya',
+    meaning: 'In Your Name, O Allah, I die and I live.',
+    bn: 'হে আল্লাহ, আপনারই নামে আমি মারা যাই এবং জীবিত হই।',
+    hint: 'What peaceful words do we recite before sleep?',
+    hintBn: 'ঘুমানোর আগে শান্তিময় কোন বাক্যটি বলি?',
+    category: 'Peaceful Sleep',
+    categoryBn: 'শান্তিময় ঘুম',
+  },
+  {
+    title: 'Surah Al-Ikhlas',
+    titleBn: 'সূরা আল-ইখলাস',
+    text: 'Qul huwa Allahu ahad. Allahus-samad. Lam yalid wa lam yulad. Wa lam yakun lahu kufuwan ahad.',
+    meaning:
+      'Say: He is Allah, the One. Allah the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent.',
+    bn: 'বলুন, তিনিই আল্লাহ, একক। আল্লাহ অমুখাপেক্ষী। তিনি কাউকে জন্ম দেননি এবং কারো থেকে জন্ম নেননি। এবং তাঁর সমকক্ষ কেউ নেই।',
+    hint: 'Can you recall Surah Al-Ikhlas from memory?',
+    hintBn: 'স্মৃতি থেকে সূরা আল-ইখলাস আবৃত্তি করতে পারেন?',
+    category: 'Short Surahs',
+    categoryBn: 'ছোট সূরা',
+  },
+]
 
 function App() {
   const [active, setActive] = useState('Home')
+  const [selectedLesson, setSelectedLesson] = useState<string | null>(null)
 
-  const [completed, setCompleted] = useState<string[]>([])
+  const [completed, setCompleted] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('noor-completed')
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
 
-  const [showMeaning, setShowMeaning] = useState(false)
+  const [revealedDuas, setRevealedDuas] = useState<Record<string, boolean>>({})
+  const [memoryRevealed, setMemoryRevealed] = useState(false)
+  const [memoryIndex, setMemoryIndex] = useState(0)
 
   const [search, setSearch] = useState('')
 
@@ -279,9 +491,29 @@ function App() {
 
   function toggleLanguage() {
     const nextLanguage = language === 'en' ? 'bn' : 'en'
-
     setLanguage(nextLanguage)
     localStorage.setItem('noor-language', nextLanguage)
+  }
+
+  function toggleCompleted(lessonNumber: string) {
+    setCompleted((prev) => {
+      const next = prev.includes(lessonNumber)
+        ? prev.filter((id) => id !== lessonNumber)
+        : [...prev, lessonNumber]
+      try {
+        localStorage.setItem('noor-completed', JSON.stringify(next))
+      } catch {
+        // storage fallback
+      }
+      return next
+    })
+  }
+
+  function toggleDua(id: string) {
+    setRevealedDuas((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }))
   }
 
 
@@ -297,10 +529,21 @@ function App() {
     `${lesson.title} ${lesson.bn}`.toLowerCase().includes(search.toLowerCase()),
   )
 
+  const currentLesson = lessons.find((l) => l.number === selectedLesson)
+  const currentMemoryItem = memoryPracticeItems[memoryIndex]
+
   return (
     <div className={`app-shell ${language === 'bn' ? 'lang-bn' : 'lang-en'}`}>
       <aside className="sidebar">
-        <a className="brand" href="#home" onClick={() => setActive('Home')}>
+        <a
+          className="brand"
+          href="#home"
+          onClick={(e) => {
+            e.preventDefault()
+            setActive('Home')
+            setSelectedLesson(null)
+          }}
+        >
           <span className="brand-mark">n.</span>
           <span className="brand-name">
             Noor-E-Verse
@@ -309,20 +552,21 @@ function App() {
         </a>
 
         <div className="side-label">{t.space}</div>
-        <nav className="nav-list">
-
+        <nav className="nav-list" aria-label="Main Navigation">
           {navItems.map((item) => (
             <button
               key={item.page}
-              className={`nav-item ${active === item.page ? 'selected' : ''}`}
-              onClick={() => setActive(item.page)}
+              className={`nav-item ${active === item.page && !selectedLesson ? 'selected' : ''}`}
+              onClick={() => {
+                setActive(item.page)
+                setSelectedLesson(null)
+              }}
             >
               <span className="nav-icon">{item.icon}</span>
               {item.label}
               {item.page === 'Noor Garden' && <span className="nav-dot" />}
             </button>
           ))}
-
         </nav>
 
         <div className="sidebar-note">
@@ -330,25 +574,62 @@ function App() {
           <p>{t.sidebarMessage}</p>
           <span>{t.sidebarSubtext}</span>
         </div>
-        <div className="sidebar-bottom">
+
+        <button
+          type="button"
+          className={`sidebar-bottom ${active === 'My learning journey' ? 'selected' : ''}`}
+          onClick={() => {
+            setActive('My learning journey')
+            setSelectedLesson(null)
+          }}
+          aria-label={t.journey}
+        >
           <span className="avatar">✿</span>
-          <span>
+          <span className="sidebar-bottom-text">
             {t.journey}
             <small>{t.growing}</small>
           </span>
-        </div>
+        </button>
       </aside>
 
       <main className="main-content">
         <header className="topbar">
-          <div className="breadcrumb">
-            {t.breadcrumb}
-            <span> / </span>
-            {navItems.find((item) => item.page === active)?.label ?? active}
-          </div>
+          <nav className="breadcrumb" aria-label="Breadcrumbs">
+            <button
+              type="button"
+              className="breadcrumb-btn"
+              onClick={() => {
+                setActive('Home')
+                setSelectedLesson(null)
+              }}
+            >
+              {t.home}
+            </button>
+            {active !== 'Home' && (
+              <>
+                <span className="breadcrumb-divider" aria-hidden="true"> / </span>
+                <button
+                  type="button"
+                  className={`breadcrumb-btn ${!selectedLesson ? 'active' : ''}`}
+                  onClick={() => setSelectedLesson(null)}
+                >
+                  {navItems.find((item) => item.page === active)?.label ?? (active === 'My learning journey' ? t.journey : active)}
+                </button>
+              </>
+            )}
+            {selectedLesson && currentLesson && (
+              <>
+                <span className="breadcrumb-divider" aria-hidden="true"> / </span>
+                <span className="breadcrumb-current">
+                  {language === 'bn' ? currentLesson.bn : currentLesson.title}
+                </span>
+              </>
+            )}
+          </nav>
 
           <div className="top-actions">
             <button
+              type="button"
               className="language-button"
               onClick={toggleLanguage}
               aria-label={language === 'en' ? 'Switch to Bengali' : 'Switch to English'}
@@ -356,19 +637,23 @@ function App() {
               {language === 'en' ? 'বাংলা' : 'English'}
             </button>
 
-            <span className="streak">
-              ✳ <b>{completed.length} {t.growth}</b>
+            <span className="streak" title={`${completed.length} ${completed.length === 1 ? t.singularGrowth : t.growth}`}>
+              ✳ <b>{completed.length} {completed.length === 1 ? t.singularGrowth : t.growth}</b>
             </span>
 
             <button
-              className="profile-button"
-              onClick={() => setActive('My learning journey')}
+              type="button"
+              className={`profile-button ${active === 'My learning journey' ? 'active' : ''}`}
+              onClick={() => {
+                setActive('My learning journey')
+                setSelectedLesson(null)
+              }}
+              aria-label={t.journey}
+              title={t.journey}
             >
               ♡
             </button>
           </div>
-
-
         </header>
 
         {active === 'Home' && (
@@ -386,8 +671,12 @@ function App() {
                 </h1>
                 <p className="welcome-copy">{t.welcomeCopy}</p>
                 <button
+                  type="button"
                   className="primary-button"
-                  onClick={() => setActive('Learn & Practise')}
+                  onClick={() => {
+                    setActive('Learn & Practise')
+                    setSelectedLesson(null)
+                  }}
                 >
                   {t.continue} <span>↗</span>
                 </button>
@@ -419,13 +708,23 @@ function App() {
 
 
             <section className="section-block">
-              <div className="section-heading"><div><div className="eyebrow">{t.exploreEyebrow}</div>
-                <h2>{t.exploreTitle}</h2></div><button
+              <div className="section-heading">
+                <div>
+                  <div className="eyebrow">{t.exploreEyebrow}</div>
+                  <h2>{t.exploreTitle}</h2>
+                </div>
+                <button
+                  type="button"
                   className="text-link"
-                  onClick={() => setActive('Learn & Practise')}
+                  onClick={() => {
+                    setActive('Learn & Practise')
+                    setSelectedLesson(null)
+                  }}
                 >
                   {t.viewLessons} ↗
-                </button></div>
+                </button>
+              </div>
+
               <div className="search-wrap">
                 <span>⌕</span>
                 <input
@@ -434,17 +733,64 @@ function App() {
                   placeholder={t.findLesson}
                   aria-label={t.findLesson}
                 />
+                {search && (
+                  <button
+                    type="button"
+                    className="search-clear-btn"
+                    onClick={() => setSearch('')}
+                    aria-label={t.clearSearch}
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
+
               <div className="lesson-grid">
-                {visibleLessons.map((lesson) => <button key={lesson.number} className={`lesson-card ${lesson.color}`} onClick={() => setActive('Learn & Practise')}>
-                  <div className="lesson-card-top"><span className="lesson-number">{lesson.number}</span><span className="lesson-illustration">{lesson.icon}</span></div>
-                  <h3>{language === 'bn' ? lesson.bn : lesson.title}</h3>
-                  <p>{language === 'bn' ? lesson.title : lesson.bn}</p><div className="lesson-footer"><span>
-                    {lesson.count.split(' ')[0]} {t.lessonsCount}
-                  </span><span className="round-arrow">↗</span></div>
-                </button>)}
+                {visibleLessons.map((lesson) => (
+                  <button
+                    key={lesson.number}
+                    className={`lesson-card ${lesson.color}`}
+                    onClick={() => {
+                      setSelectedLesson(lesson.number)
+                      setActive('Learn & Practise')
+                    }}
+                  >
+                    <div className="card-image-wrap">
+                      <img
+                        src={lesson.image}
+                        alt=""
+                        aria-hidden="true"
+                        className="card-image"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="lesson-card-top">
+                      <span className="lesson-number">{lesson.number}</span>
+                      <span className="lesson-illustration">{lesson.icon}</span>
+                    </div>
+                    <h3>{language === 'bn' ? lesson.bn : lesson.title}</h3>
+                    <p>{language === 'bn' ? lesson.title : lesson.bn}</p>
+                    <div className="lesson-footer">
+                      <span>
+                        {completed.includes(lesson.number)
+                          ? t.completedBadge
+                          : `${lesson.count.split(' ')[0]} ${t.lessonsCount}`}
+                      </span>
+                      <span className="round-arrow">↗</span>
+                    </div>
+                  </button>
+                ))}
                 {visibleLessons.length === 0 && (
-                  <p className="empty-state">{t.noLessons}</p>
+                  <div className="empty-state-wrap">
+                    <p className="empty-state">{t.noLessons}</p>
+                    <button
+                      type="button"
+                      className="text-link"
+                      onClick={() => setSearch('')}
+                    >
+                      {t.clearSearch} ↺
+                    </button>
+                  </div>
                 )}
               </div>
             </section>
@@ -457,43 +803,61 @@ function App() {
                 </div>
 
                 <button
+                  type="button"
                   className="text-link"
-                  onClick={() => setActive('Memory Mirror')}
+                  onClick={() => {
+                    setActive('Memory Mirror')
+                    setMemoryRevealed(false)
+                  }}
                 >
                   {t.practiseRecall} ↗
                 </button>
               </div>
 
               <div className="dua-grid">
-                {quickDuas.map((dua, index) => (
-                  <article className="dua-card" key={dua.title}>
-                    <div className="dua-card-top">
-                      <span className="dua-symbol">
-                        {index === 0 ? '✧' : '♡'}
-                      </span>
-                      <span className="tiny-tag">
-                        {t.duaTag} {index + 1}
-                      </span>
-                    </div>
+                {quickDuas.map((dua, index) => {
+                  const duaKey = `quick-${index}`
+                  const isRevealed = !!revealedDuas[duaKey]
+                  return (
+                    <article className="dua-card" key={dua.title}>
+                      <div className="card-image-wrap dua-image-wrap">
+                        <img
+                          src={dua.image}
+                          alt=""
+                          aria-hidden="true"
+                          className="card-image"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="dua-card-top">
+                        <span className="dua-symbol">
+                          {index === 0 ? '✧' : '♡'}
+                        </span>
+                        <span className="tiny-tag">
+                          {t.duaTag} {index + 1}
+                        </span>
+                      </div>
 
-                    <h3>{language === 'bn' ? dua.titleBn : dua.title}</h3>
+                      <h3>{language === 'bn' ? dua.titleBn : dua.title}</h3>
 
-                    <p className="transliteration">{dua.text}</p>
+                      <p className="transliteration">{dua.text}</p>
 
-                    {showMeaning && (
-                      <p className="dua-meaning">
-                        {language === 'bn' ? dua.bn : dua.meaning}
-                      </p>
-                    )}
+                      {isRevealed && (
+                        <p className="dua-meaning">
+                          {language === 'bn' ? dua.bn : dua.meaning}
+                        </p>
+                      )}
 
-                    <button
-                      className="reveal-button"
-                      onClick={() => setShowMeaning((old) => !old)}
-                    >
-                      {showMeaning ? t.hide : t.reflect} <span>↗</span>
-                    </button>
-                  </article>
-                ))}
+                      <button
+                        type="button"
+                        className="reveal-button"
+                        onClick={() => toggleDua(duaKey)}
+                      >
+                        {isRevealed ? t.hide : t.reflect} <span>↗</span>
+                      </button>
+                    </article>
+                  )
+                })}
               </div>
             </section>
 
@@ -507,8 +871,12 @@ function App() {
               </div>
 
               <button
+                type="button"
                 className="garden-button"
-                onClick={() => setActive('Noor Garden')}
+                onClick={() => {
+                  setActive('Noor Garden')
+                  setSelectedLesson(null)
+                }}
               >
                 {t.visitGarden} ↗
               </button>
@@ -517,8 +885,127 @@ function App() {
           </>
         )}
 
-        {active === 'Learn & Practise' && (
+        {active === 'Learn & Practise' && selectedLesson && currentLesson && (
+          <section className="subpage lesson-detail-view">
+            <button
+              type="button"
+              className="back-nav-button"
+              onClick={() => setSelectedLesson(null)}
+            >
+              ← {t.backToLessons}
+            </button>
+
+            <div className="eyebrow">
+              {currentLesson.icon} {t.space} · {language === 'bn' ? currentLesson.bn : currentLesson.title}
+            </div>
+
+            <div className="lesson-detail-header">
+              <div>
+                <span className="lesson-detail-badge">
+                  {t.duaTag} · {currentLesson.number}
+                </span>
+                <h1 className="lesson-detail-title">
+                  {language === 'bn' ? currentLesson.bn : currentLesson.title}
+                </h1>
+                <p className="welcome-copy">
+                  {language === 'bn' ? currentLesson.title : currentLesson.bn} · {currentLesson.duas.length} {t.lessonsCount}
+                </p>
+              </div>
+              <img
+                src={currentLesson.image}
+                alt=""
+                aria-hidden="true"
+                className="lesson-detail-img"
+              />
+            </div>
+
+            <div className="lesson-duas-section">
+              <h2 className="section-title">{t.lessonDuasTitle}</h2>
+              <div className="lesson-duas-grid">
+                {currentLesson.duas.map((dua, idx) => {
+                  const duaKey = `lesson-${currentLesson.number}-${idx}`
+                  const isRevealed = !!revealedDuas[duaKey]
+                  return (
+                    <article className="lesson-dua-card" key={dua.title}>
+                      <div className="lesson-dua-header">
+                        <span className="tiny-tag">
+                          {t.duaTag} {idx + 1}
+                        </span>
+                        <span className="dua-symbol">{idx === 0 ? '✦' : '✧'}</span>
+                      </div>
+                      <h4>{language === 'bn' ? dua.titleBn : dua.title}</h4>
+                      <p className="transliteration">{dua.text}</p>
+                      {isRevealed && (
+                        <p className="dua-meaning">
+                          {language === 'bn' ? dua.bn : dua.meaning}
+                        </p>
+                      )}
+                      <button
+                        type="button"
+                        className="reveal-button"
+                        onClick={() => toggleDua(duaKey)}
+                      >
+                        {isRevealed ? t.hide : t.reveal} <span>↗</span>
+                      </button>
+                    </article>
+                  )
+                })}
+              </div>
+            </div>
+
+            <div className="lesson-actions-bar">
+              <button
+                type="button"
+                className={`primary-button completion-toggle ${completed.includes(currentLesson.number) ? 'completed' : ''}`}
+                onClick={() => toggleCompleted(currentLesson.number)}
+              >
+                {completed.includes(currentLesson.number)
+                  ? t.completedBadge
+                  : t.markCompleted}
+              </button>
+
+              <button
+                type="button"
+                className="text-link"
+                onClick={() => {
+                  const idx = memoryPracticeItems.findIndex(
+                    (m) =>
+                      m.category === currentLesson.title ||
+                      m.title.toLowerCase().includes(currentLesson.title.split(' ')[0].toLowerCase()),
+                  )
+                  if (idx !== -1) setMemoryIndex(idx)
+                  setMemoryRevealed(false)
+                  setActive('Memory Mirror')
+                  setSelectedLesson(null)
+                }}
+              >
+                {t.practiceInMirror} ↗
+              </button>
+            </div>
+
+            {completed.includes(currentLesson.number) && (
+              <div className="completion-feedback">
+                <span>❀</span>
+                <span>
+                  {language === 'bn'
+                    ? 'মাশাআল্লাহ! আপনি এই পাঠটি সম্পন্ন করেছেন এবং আপনার নূরের বাগান বৃদ্ধি পেয়েছে।'
+                    : 'Māshā’Allāh! You completed this lesson and nurtured your Noor Garden.'}
+                </span>
+              </div>
+            )}
+          </section>
+        )}
+
+        {active === 'Learn & Practise' && !selectedLesson && (
           <section className="subpage">
+            <button
+              type="button"
+              className="back-nav-button"
+              onClick={() => setActive('Home')}
+            >
+              ← {t.backHome}
+            </button>
+
             <div className="eyebrow">{t.learnEyebrow}</div>
 
             <h1>
@@ -532,14 +1019,17 @@ function App() {
                 <button
                   className={`lesson-card ${lesson.color}`}
                   key={lesson.number}
-                  onClick={() =>
-                    setCompleted((old) =>
-                      old.includes(lesson.number)
-                        ? old
-                        : [...old, lesson.number],
-                    )
-                  }
+                  onClick={() => setSelectedLesson(lesson.number)}
                 >
+                  <div className="card-image-wrap">
+                    <img
+                      src={lesson.image}
+                      alt=""
+                      aria-hidden="true"
+                      className="card-image"
+                      loading="lazy"
+                    />
+                  </div>
                   <div className="lesson-card-top">
                     <span className="lesson-number">{lesson.number}</span>
                     <span className="lesson-illustration">{lesson.icon}</span>
@@ -551,7 +1041,7 @@ function App() {
                   <div className="lesson-footer">
                     <span>
                       {completed.includes(lesson.number)
-                        ? t.revision
+                        ? t.completedBadge
                         : `${lesson.count.split(' ')[0]} ${t.lessonsCount}`}
                     </span>
                     <span className="round-arrow">↗</span>
@@ -560,12 +1050,20 @@ function App() {
               ))}
             </div>
 
-            <p className="hint-text">{t.lessonHint}</p>
+            <p className="hint-text">{t.lessonHintActive}</p>
           </section>
         )}
 
         {active === 'Noor Garden' && (
           <section className="subpage">
+            <button
+              type="button"
+              className="back-nav-button"
+              onClick={() => setActive('Home')}
+            >
+              ← {t.backHome}
+            </button>
+
             <div className="eyebrow">{t.gardenPageEyebrow}</div>
 
             <h1>
@@ -613,8 +1111,12 @@ function App() {
             </div>
 
             <button
+              type="button"
               className="primary-button"
-              onClick={() => setActive('Learn & Practise')}
+              onClick={() => {
+                setActive('Learn & Practise')
+                setSelectedLesson(null)
+              }}
             >
               {t.learnSomething} ↗
             </button>
@@ -623,6 +1125,14 @@ function App() {
 
         {active === 'Memory Mirror' && (
           <section className="subpage">
+            <button
+              type="button"
+              className="back-nav-button"
+              onClick={() => setActive('Home')}
+            >
+              ← {t.backHome}
+            </button>
+
             <div className="eyebrow">{t.memoryEyebrow}</div>
 
             <h1>
@@ -631,35 +1141,87 @@ function App() {
 
             <p className="welcome-copy">{t.memoryDescription}</p>
 
-            <article className="memory-card">
-              <span className="tiny-tag">{t.dailyPractice}</span>
+            {currentMemoryItem && (
+              <article className="memory-card">
+                <div className="card-image-wrap memory-image-wrap">
+                  <img
+                    src={memoryMirrorImg}
+                    alt=""
+                    aria-hidden="true"
+                    className="card-image"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="memory-card-top-row">
+                  <span className="tiny-tag">
+                    {language === 'bn' ? currentMemoryItem.categoryBn : currentMemoryItem.category}
+                  </span>
+                  <span className="memory-counter">
+                    {memoryIndex + 1} / {memoryPracticeItems.length}
+                  </span>
+                </div>
 
-              <h2>{t.seekingKnowledge}</h2>
+                <h2>
+                  {language === 'bn' ? currentMemoryItem.titleBn : currentMemoryItem.title}
+                </h2>
 
-              <p className="transliteration">
-                {showMeaning ? 'Rabbi zidni ilma' : t.recallPrompt}
-              </p>
+                <p className="transliteration">
+                  {memoryRevealed
+                    ? currentMemoryItem.text
+                    : (language === 'bn' ? currentMemoryItem.hintBn : currentMemoryItem.hint)}
+                </p>
 
-              <p className="dua-meaning">
-                {showMeaning
-                  ? language === 'bn'
-                    ? 'হে আমার রব, আমার জ্ঞান বৃদ্ধি করুন।'
-                    : 'My Lord, increase me in knowledge.'
-                  : t.recallHint}
-              </p>
+                <p className="dua-meaning">
+                  {memoryRevealed
+                    ? (language === 'bn' ? currentMemoryItem.bn : currentMemoryItem.meaning)
+                    : (language === 'bn' ? 'দেখার আগে একটু সময় নিয়ে মনে করার চেষ্টা করুন।' : 'Take a moment to remember before revealing.')}
+                </p>
 
-              <button
-                className="primary-button"
-                onClick={() => setShowMeaning((old) => !old)}
-              >
-                {showMeaning ? t.hideAndRetry : t.revealWords} ↗
-              </button>
-            </article>
+                <button
+                  type="button"
+                  className="primary-button"
+                  onClick={() => setMemoryRevealed((old) => !old)}
+                >
+                  {memoryRevealed ? t.hideAndRetry : t.revealWords} ↗
+                </button>
+
+                <div className="memory-nav-controls">
+                  <button
+                    type="button"
+                    className="text-link"
+                    onClick={() => {
+                      setMemoryIndex((prev) => (prev - 1 + memoryPracticeItems.length) % memoryPracticeItems.length)
+                      setMemoryRevealed(false)
+                    }}
+                  >
+                    ← {t.prevPractice}
+                  </button>
+                  <button
+                    type="button"
+                    className="text-link"
+                    onClick={() => {
+                      setMemoryIndex((prev) => (prev + 1) % memoryPracticeItems.length)
+                      setMemoryRevealed(false)
+                    }}
+                  >
+                    {t.nextPractice} →
+                  </button>
+                </div>
+              </article>
+            )}
           </section>
         )}
 
         {active === 'My Day, My Duas' && (
           <section className="subpage">
+            <button
+              type="button"
+              className="back-nav-button"
+              onClick={() => setActive('Home')}
+            >
+              ← {t.backHome}
+            </button>
+
             <div className="eyebrow">{t.myDayEyebrow}</div>
 
             <h1>
@@ -673,8 +1235,20 @@ function App() {
                 <button
                   className={`lesson-card ${lesson.color}`}
                   key={lesson.number}
-                  onClick={() => setActive('Learn & Practise')}
+                  onClick={() => {
+                    setSelectedLesson(lesson.number)
+                    setActive('Learn & Practise')
+                  }}
                 >
+                  <div className="card-image-wrap">
+                    <img
+                      src={lesson.image}
+                      alt=""
+                      aria-hidden="true"
+                      className="card-image"
+                      loading="lazy"
+                    />
+                  </div>
                   <div className="lesson-card-top">
                     <span className="lesson-number">{lesson.number}</span>
                     <span className="lesson-illustration">{lesson.icon}</span>
@@ -684,7 +1258,11 @@ function App() {
                   <p>{language === 'bn' ? lesson.title : lesson.bn}</p>
 
                   <div className="lesson-footer">
-                    <span>{t.exploreMoments}</span>
+                    <span>
+                      {completed.includes(lesson.number)
+                        ? t.completedBadge
+                        : t.exploreMoments}
+                    </span>
                     <span className="round-arrow">↗</span>
                   </div>
                 </button>
@@ -701,6 +1279,17 @@ function App() {
           'My Day, My Duas',
         ].includes(active) && (
             <section className="subpage">
+              <button
+                type="button"
+                className="back-nav-button"
+                onClick={() => {
+                  setActive('Home')
+                  setSelectedLesson(null)
+                }}
+              >
+                ← {t.backHome}
+              </button>
+
               <div className="eyebrow">{t.profileEyebrow}</div>
 
               <h1>
@@ -709,9 +1298,80 @@ function App() {
 
               <p className="welcome-copy">{t.profileDescription}</p>
 
-              <button className="primary-button" onClick={() => setActive('Home')}>
-                {t.backHomeButton} ↗
-              </button>
+              <div className="journey-summary-card">
+                <div className="card-image-wrap journey-image-wrap">
+                  <img
+                    src={learningJourneyImg}
+                    alt=""
+                    aria-hidden="true"
+                    className="card-image"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="journey-summary-header">
+                  <span className="summary-icon">✿</span>
+                  <div>
+                    <h3>{t.journeySummary}</h3>
+                    <p>
+                      {completed.length} / {lessons.length} {t.lessonsCompletedCount} · {completed.length} {completed.length === 1 ? t.singularGrowth : t.growth}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="progress-track">
+                  <div style={{ width: `${Math.min(100, (completed.length / lessons.length) * 100)}%` }} />
+                </div>
+
+                <div className="journey-lesson-list">
+                  {lessons.map((lesson) => {
+                    const isDone = completed.includes(lesson.number)
+                    return (
+                      <div key={lesson.number} className={`journey-lesson-item ${isDone ? 'done' : ''}`}>
+                        <span className="journey-status">{isDone ? '✓' : '○'}</span>
+                        <span className="journey-lesson-name">
+                          {lesson.number}. {language === 'bn' ? lesson.bn : lesson.title}
+                        </span>
+                        <button
+                          type="button"
+                          className="text-link journey-view-btn"
+                          onClick={() => {
+                            setSelectedLesson(lesson.number)
+                            setActive('Learn & Practise')
+                          }}
+                        >
+                          {isDone ? t.review : t.start} ↗
+                        </button>
+                      </div>
+                    )
+                  })}
+                </div>
+
+                <div className="journey-actions">
+                  <button
+                    type="button"
+                    className="primary-button"
+                    onClick={() => {
+                      setActive('Learn & Practise')
+                      setSelectedLesson(null)
+                    }}
+                  >
+                    {t.continue} ↗
+                  </button>
+
+                  {completed.length > 0 && (
+                    <button
+                      type="button"
+                      className="text-link reset-btn"
+                      onClick={() => {
+                        setCompleted([])
+                        localStorage.removeItem('noor-completed')
+                      }}
+                    >
+                      {t.resetProgress}
+                    </button>
+                  )}
+                </div>
+              </div>
             </section>
           )}
 
